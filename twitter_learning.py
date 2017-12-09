@@ -1,4 +1,4 @@
-# Attempts to predict followers for tweet data
+# Attempts to predict number of retweets based on words in tweet and number of followers
 
 from sklearn.feature_extraction.text import TfidfTransformer
 from sklearn.feature_extraction.text import CountVectorizer
@@ -22,18 +22,25 @@ from sklearn.datasets import fetch_20newsgroups
 from sklearn.svm import SVR
 from sklearn.ensemble import AdaBoostRegressor
 from sklearn.pipeline import FeatureUnion
+from data_scraping import TweetData
 
 # http://scikit-learn.org/stable/auto_examples/hetero_feature_union.html
 # https://marcobonzanini.com/2015/03/02/mining-twitter-data-with-python-part-1/
+# https://pythontips.com/2013/08/02/what-is-pickle-in-python/
 
 verbose = True
 write_fname = 'Output.txt'
 
 class twitter_learning:
     def __init__(self):
-        self.write_file = open(write_fname, 'w+')
+        self.write_file = open(write_fname, 'a+')
         self.write_file.write('========================================\n')
         self.write_file.write('NEW TEST\n')
+        self.td = TweetData('twitter_data.pickle')
+
+        features = self.td.tweets[:]['text']
+        # make sure to convert to double before dividing:
+        targets = np.asarray(self.td.tweets[:]['retweets'])/np.asarray(self.td.tweets[:]['followers'])
 
         cats = ['alt.atheism', 'sci.space']
         twenty_train = fetch_20newsgroups(subset='train', categories=cats, shuffle=True, random_state=42)
@@ -56,7 +63,7 @@ class twitter_learning:
             {'tfidf__sublinear_tf': [True]},
             {'clf__fit_intercept': [True, False]}
                   ]
-        self.get_result(features, targets, clf, params)
+        self.get_result_text(features, targets, clf, params)
 
         # State Vector Regression
         clf = SVR()
@@ -76,7 +83,7 @@ class twitter_learning:
         #     {'clf__epsilon': [0.1, 0.2, 0.5, 1.0]},
         #     {'clf__kernel': ['rbf', 'linear', 'poly']}
         #           ]
-        self.get_result(features, targets, clf, params)
+        self.get_result_text(features, targets, clf, params)
 
         # Adaboost Regression
         clf = AdaBoostRegressor()
@@ -92,7 +99,7 @@ class twitter_learning:
         #     {'tfidf__sublinear_tf': [True]},
         #     {'clf__n_estimators': [25, 50, 100]},
         #           ]
-        self.get_result(features, targets, clf, params)
+        self.get_result_text(features, targets, clf, params)
         self.write_file.close()
 
 
@@ -103,7 +110,7 @@ class twitter_learning:
     clf: classifier object
     params: dictionary of parameters to try
     '''
-    def get_result(self, features, targets, clf, params):
+    def get_result_text(self, features, targets, clf, params):
         self.my_print("Making pipeline for classifier {}".format(clf))
         pipe = Pipeline([
             ('vect', CountVectorizer()),
