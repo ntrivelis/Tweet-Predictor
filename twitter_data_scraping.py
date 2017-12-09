@@ -3,8 +3,10 @@ import sys
 from twitter_classes import TwitterCredentials, TweetData
 
 
-def main(user_names=["realDonaldTrump"], filename="twitter_data"):
+def main(user_names="realDonaldTrump", output_filename="twitter_data"):
     # Scrapes tweets from specified users.
+
+    user_names = [user_names]
 
     # Instantiate your Twitter credentials.
     my_credentials = TwitterCredentials()
@@ -15,7 +17,7 @@ def main(user_names=["realDonaldTrump"], filename="twitter_data"):
     api = tweepy.API(auth)
 
     # Initializes a list for the scraped tweets.
-    tweet_data = TweetData(filename)
+    tweet_data = TweetData(output_filename)
 
     # Iterate over all users in the list to pull tweets.
     for user_name in user_names:
@@ -49,9 +51,9 @@ def main(user_names=["realDonaldTrump"], filename="twitter_data"):
 
     # Save the tweets as a pickle file.
     if tweet_data.save_tweets():
-        return 1
-    else:
         return 0
+    else:
+        return 1
 
 
 if __name__ == "__main__":
@@ -59,13 +61,14 @@ if __name__ == "__main__":
     # Choose arguments to pass.
     if len(sys.argv) == 1:
         return_arg = main()
-    elif len(sys.argv) == 3:
+    elif len(sys.argv) <= 3:
         return_arg = main(sys.argv[1:])
     else:
         sys.exit("error: incorrect number of arguments passed")
 
     # Indicate success or failure.
-    if return_arg:
-        sys.exit("success: tweet data was saved")
+    if return_arg == 0:
+        print "success: tweet data was saved"
+        sys.exit(0)
     else:
         sys.exit("error: tweet data failed to save")
