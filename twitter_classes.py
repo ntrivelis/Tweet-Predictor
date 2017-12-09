@@ -24,11 +24,14 @@ class TwitterCredentials(object):
 
 
 class TweetData(object):
-    def __init__(self, filename):
+    def __init__(self, output_filename, pickle_file=None):
         # Stores and organizes tweet information.
         self.tweet_count = 0
-        self.tweets = defaultdict(dict)
-        self.filename = filename
+        if pickle_file != None:
+            self.tweets = self.load_tweets(pickle_file)
+        else:
+            self.tweets = defaultdict(dict)
+        self.output_filename = output_filename
         self.current_year = time.time()/60.0/60.0/24.0/30.4375/12.0 + 1970
         self.current_month = 12.0 * (self.current_year - math.floor(self.current_year)) + 1
         self.current_day = 30.4375 * (self.current_month - math.floor(self.current_month)) + 1
@@ -85,7 +88,7 @@ class TweetData(object):
         # Save the dictionary of tweet data to a pickle file.
 
         # Open pickle file.
-        pickle_out = open("%s.pickle" % self.filename, "wb")
+        pickle_out = open("%s.pickle" % self.output_filename, "wb")
 
         # Dump dictionary of tweets into the pickle file.
         pickle.dump(self.tweets, pickle_out)
@@ -93,4 +96,12 @@ class TweetData(object):
         # Close the pickle file.
         pickle_out.close()
         return True
-    
+
+    def load_tweets(self, pickle_file):
+        # Load the dictionary of tweet data from a pickle file.
+
+        # Open pickle file.
+        pickle_in = open(pickle_file, "rb")
+
+        # Populate the dictionary
+        return pickle.load(pickle_in)
