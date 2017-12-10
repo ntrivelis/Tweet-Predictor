@@ -8,7 +8,8 @@ class TwitterCredentials(object):
 
     def __init__(self):
         '''
-        Twitter Account Information:
+        Contains Twitter account information.
+
         Name: Harold Tweetbot
         Account: ml697697
         Email: ml697697@gmail.com
@@ -25,7 +26,9 @@ class TwitterCredentials(object):
 
 class TweetData(object):
     def __init__(self, output_filename, pickle_file=None):
-        # Stores and organizes tweet information.
+        """
+        Stores and organizes tweet information.
+        """
         self.tweet_count = 0
         if pickle_file != None:
             self.tweets = self.load_tweets(pickle_file)
@@ -39,8 +42,9 @@ class TweetData(object):
                                        + 365.25*math.floor(self.current_year))  # in days
 
     def add_tweet(self, tweet_data):
-        # Adds tweet to dictionary and formats it if not a retweet.
-
+        """
+        Adds tweet to dictionary and formats it if not a retweet.
+        """
         if self.check_if_retweet(tweet_data) == True:
             return True
         else:
@@ -62,13 +66,15 @@ class TweetData(object):
             return False
 
     def check_if_retweet(self, tweet_data):
-        # Checks if tweet is a retweet.
-
+        """
+        Checks if tweet is a retweet.
+        """
         return tweet_data._json.has_key('retweeted_status')
 
     def tweet_time(self, tweet_data):
-        # Calculates the ratio of tweet age to account age.
-
+        """
+        Calculates the ratio of tweet age to account age.
+        """
         # Time of user's account creation.
         user_day = tweet_data.user.created_at.day
         user_month = tweet_data.user.created_at.month
@@ -85,8 +91,9 @@ class TweetData(object):
         return (tweet_time - user_time)/(self.current_time - user_time)
 
     def save_tweets(self):
-        # Save the dictionary of tweet data to a pickle file.
-
+        """
+        Save the dictionary of tweet data to a pickle file.
+        """
         # Open pickle file.
         pickle_out = open("%s.pickle" % self.output_filename, "wb")
 
@@ -98,8 +105,9 @@ class TweetData(object):
         return True
 
     def load_tweets(self, pickle_file):
-        # Load the dictionary of tweet data from a pickle file.
-
+        """
+        Load the dictionary of tweet data from a pickle file.
+        """
         # Open pickle file.
         pickle_in = open(pickle_file, "rb")
 

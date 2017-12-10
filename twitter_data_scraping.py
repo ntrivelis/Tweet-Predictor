@@ -4,8 +4,9 @@ from twitter_classes import TwitterCredentials, TweetData
 
 
 def main(user_names="realDonaldTrump", output_filename="twitter_data"):
-    # Scrapes tweets from specified users.
-
+    """
+    Scrapes tweets from specified users.
+    """
     user_names = [user_names]
 
     # Instantiate your Twitter credentials.
