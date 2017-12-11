@@ -3,11 +3,14 @@ import sys
 from twitter_classes import TwitterCredentials, TweetData
 
 
-def main(user_names="realDonaldTrump", output_filename="twitter_data"):
+def main(user_filename="twitter_users_default", output_filename="twitter_data_default"):
     """
     Scrapes tweets from specified users.
     """
-    user_names = [user_names]
+    # Read in the user name text file as a list.
+    with open('%s.txt' % user_filename, 'r') as user_file:
+        user_names_unstripped = user_file.readlines()
+        user_names = [user_name.strip() for user_name in user_names_unstripped]
 
     # Instantiate your Twitter credentials.
     my_credentials = TwitterCredentials()
@@ -60,16 +63,16 @@ def main(user_names="realDonaldTrump", output_filename="twitter_data"):
 if __name__ == "__main__":
 
     # Choose arguments to pass.
-    if len(sys.argv) == 1:
+    if len(sys.argv) == 3:
+        return_arg = main(user_filename=sys.argv[1], output_filename=sys.argv[2])
+    elif len(sys.argv) == 1:
         return_arg = main()
-    elif len(sys.argv) <= 3:
-        return_arg = main(sys.argv[1:])
     else:
-        sys.exit("error: incorrect number of arguments passed")
+        sys.exit("error: incorrect number of input arguments")
 
     # Indicate success or failure.
     if return_arg == 0:
-        print "success: tweet data was saved"
+        print("success: tweet data was saved")
         sys.exit(0)
     else:
         sys.exit("error: tweet data failed to save")
