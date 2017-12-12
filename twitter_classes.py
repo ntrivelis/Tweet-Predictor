@@ -25,13 +25,14 @@ class TwitterCredentials(object):
 
 
 class TweetData(object):
-    def __init__(self, output_filename, pickle_file=None):
+
+    def __init__(self, output_filename=None, pickle_filename=None):
         """
         Stores and organizes tweet information.
         """
         self.tweet_count = 0
-        if pickle_file != None:
-            self.tweets = self.load_tweets(pickle_file)
+        if pickle_filename != None:
+            self.tweets = self.load_tweets(pickle_filename)
         else:
             self.tweets = defaultdict(dict)
         self.output_filename = output_filename
@@ -94,22 +95,25 @@ class TweetData(object):
         """
         Save the dictionary of tweet data to a pickle file.
         """
-        # Open pickle file.
-        pickle_out = open("%s.pickle" % self.output_filename, "wb")
+        if self.output_filename == None:
+            return False
+        else:
+            # Open pickle file.
+            pickle_out = open("%s.pickle" % self.output_filename, "wb")
 
-        # Dump dictionary of tweets into the pickle file.
-        pickle.dump(self.tweets, pickle_out)
+            # Dump dictionary of tweets into the pickle file.
+            pickle.dump(self.tweets, pickle_out)
 
-        # Close the pickle file.
-        pickle_out.close()
-        return True
+            # Close the pickle file.
+            pickle_out.close()
+            return True
 
-    def load_tweets(self, pickle_file):
+    def load_tweets(self, pickle_filename):
         """
         Load the dictionary of tweet data from a pickle file.
         """
         # Open pickle file.
-        pickle_in = open(pickle_file, "rb")
+        pickle_in = open("%s.pickle" % pickle_filename, "rb")
 
         # Populate the dictionary
         return pickle.load(pickle_in)

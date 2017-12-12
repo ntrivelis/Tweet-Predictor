@@ -21,7 +21,7 @@ def main(user_filename="twitter_users_default", output_filename="twitter_data_de
     api = tweepy.API(auth)
 
     # Initializes a list for the scraped tweets.
-    tweet_data = TweetData(output_filename)
+    tweet_data = TweetData(output_filename=output_filename)
 
     # Iterate over all users in the list to pull tweets.
     for user_name in user_names:
@@ -61,7 +61,6 @@ def main(user_filename="twitter_users_default", output_filename="twitter_data_de
 
 
 if __name__ == "__main__":
-
     # Choose arguments to pass.
     if len(sys.argv) == 3:
         return_arg = main(user_filename=sys.argv[1], output_filename=sys.argv[2])
@@ -75,4 +74,4 @@ if __name__ == "__main__":
         print("success: tweet data was saved")
         sys.exit(0)
     else:
-        sys.exit("error: tweet data failed to save")
+        sys.exit("error: tweet data failed to save, check if a filename is passed")

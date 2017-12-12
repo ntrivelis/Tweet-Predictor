@@ -1,5 +1,3 @@
-# Attempts to predict number of retweets based on words in tweet and number of followers
-
 from sklearn.feature_extraction.text import TfidfTransformer
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.naive_bayes import MultinomialNB
@@ -22,24 +20,34 @@ from sklearn.datasets import fetch_20newsgroups
 from sklearn.svm import SVR
 from sklearn.ensemble import AdaBoostRegressor
 from sklearn.pipeline import FeatureUnion
-from data_scraping import TweetData
+from twitter_classes import TweetData
+import sys
 
 # http://scikit-learn.org/stable/auto_examples/hetero_feature_union.html
 # https://marcobonzanini.com/2015/03/02/mining-twitter-data-with-python-part-1/
 # https://pythontips.com/2013/08/02/what-is-pickle-in-python/
 
 verbose = True
-write_fname = 'Output.txt'
+write_fname = 'debug.txt'
 
-class twitter_learning:
-    def __init__(self):
+class TweetLearning(object):
+
+    def __init__(self, input_filename):
+        """
+        Stores and interfaces with the tweet classifier for machine learning
+        """
+        # Setup debugging file.
         self.write_file = open(write_fname, 'a+')
         self.write_file.write('========================================\n')
         self.write_file.write('NEW TEST\n')
-        self.td = TweetData('twitter_data.pickle')
 
+        # Instantiate the learner.
+        self.td = TweetData(pickle_filename=input_filename)
+
+        # Extract relevant features for learning.
         features = self.td.tweets[:]['text']
-        # make sure to convert to double before dividing:
+
+        # Make sure to convert to double before dividing:
         targets = np.asarray(self.td.tweets[:]['retweets'])/np.asarray(self.td.tweets[:]['followers'])
 
         cats = ['alt.atheism', 'sci.space']
@@ -102,15 +110,14 @@ class twitter_learning:
         self.get_result_text(features, targets, clf, params)
         self.write_file.close()
 
-
-    '''
-    Inputs:
-    features: n-by-d array of features
-    targets: n-by-1 array of targets
-    clf: classifier object
-    params: dictionary of parameters to try
-    '''
     def get_result_text(self, features, targets, clf, params):
+        '''
+        Inputs:
+        features: n-by-d array of features
+        targets: n-by-1 array of targets
+        clf: classifier object
+        params: dictionary of parameters to try
+        '''
         self.my_print("Making pipeline for classifier {}".format(clf))
         pipe = Pipeline([
             ('vect', CountVectorizer()),
@@ -144,5 +151,26 @@ class twitter_learning:
             print text
         self.write_file.write(text+'\n')
 
+def main(input_filename="twitter_data_default", output_filename="twitter_predictions_default"):
+    """
+    Trains a learning model for tweet data and attempts to make like and retweet predictions base on text content and
+    number of followers (inversely scaled for age of tweet).
+    """
+    TweetLearning(input_filename)
+    return 0
+
 if __name__ == '__main__':
-    twitter_learning()
+    # Choose arguments to pass.
+    if len(sys.argv) == 3:
+        return_arg = main(input_filename=sys.argv[1], output_filename=sys.argv[2])
+    elif len(sys.argv) == 1:
+        return_arg = main()
+    else:
+        sys.exit("error: incorrect number of input arguments")
+
+    # Indicate success or failure.
+    if return_arg == 0:
+        print("success: tweet data learned and tested")
+        sys.exit(0)
+    else:
+        sys.exit("error: failure")
