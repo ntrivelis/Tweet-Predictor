@@ -92,13 +92,20 @@ class TweetData(object):
         # Calculate the ratio.
         return (tweet_time - user_time)/(self.current_time - user_time)
 
-    def filter_text(self):
+    def return_feature(self, feature):
         """
-        Removes unnecessary characters, words, and links from the tweets. Helps with the bag-of-words implementation.
+        Returns specified feature as a list. For text, removes unnecessary characters, words, and links from the tweets.
         """
-        for i in range(self.tweet_count):
-            unfiltered_tweet = self.tweets[i]['text']
-            filtered_tweet = unfiltered_tweet
+        if feature == 'text':
+            features = []
+            for i in range(self.tweet_count):
+                unfiltered_tweet = self.tweets[i]['text']
+                filtered_tweet = unfiltered_tweet
+                features.append(filtered_tweet)
+            return features
+        else:
+            features = [self.tweets[i][feature] for i in range(self.tweet_count)]
+            return features
 
     def save_tweets(self):
         """
