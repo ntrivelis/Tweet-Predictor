@@ -35,12 +35,12 @@ class TweetData(object):
             self.tweets = self.load_tweets(pickle_filename)
         else:
             self.tweets = defaultdict(dict)
-        self.output_filename = output_filename
-        self.current_year = time.time()/60.0/60.0/24.0/30.4375/12.0 + 1970
-        self.current_month = 12.0 * (self.current_year - math.floor(self.current_year)) + 1
-        self.current_day = 30.4375 * (self.current_month - math.floor(self.current_month)) + 1
-        self.current_time = math.floor(self.current_day + 30.4375*math.floor(self.current_month)
-                                       + 365.25*math.floor(self.current_year))  # in days
+            self.output_filename = output_filename
+            self.current_year = time.time()/60.0/60.0/24.0/30.4375/12.0 + 1970
+            self.current_month = 12.0 * (self.current_year - math.floor(self.current_year)) + 1
+            self.current_day = 30.4375 * (self.current_month - math.floor(self.current_month)) + 1
+            self.current_time = math.floor(self.current_day + 30.4375*math.floor(self.current_month)
+                                           + 365.25*math.floor(self.current_year))  # in days
 
     def add_tweet(self, tweet_data):
         """
