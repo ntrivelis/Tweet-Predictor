@@ -2,6 +2,7 @@ from collections import defaultdict
 import time
 import math
 import pickle
+import re
 
 
 class TwitterCredentials(object):
@@ -101,6 +102,8 @@ class TweetData(object):
             for i in range(self.tweet_count):
                 unfiltered_tweet = self.tweets[i]['text']
                 filtered_tweet = unfiltered_tweet.encode('ascii', 'replace')
+                url = re.search("(?P<url>https?://[^\s]+)", filtered_tweet).group("url")
+                filtered_tweet = re.sub(url, '', filtered_tweet)
                 features.append(filtered_tweet)
             return features
         else:
