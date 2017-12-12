@@ -151,7 +151,7 @@ class TweetLearning(object):
             print text
         self.write_file.write(text+'\n')
 
-def main(input_filename="twitter_data_default", output_filename="twitter_predictions_default"):
+def main(input_filename="tweet_data/twitter_data_default", output_filename="learning_data/twitter_predictions_default"):
     """
     Trains a learning model for tweet data and attempts to make like and retweet predictions base on text content and
     number of followers (inversely scaled for age of tweet).

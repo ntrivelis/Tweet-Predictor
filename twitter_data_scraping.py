@@ -3,7 +3,7 @@ import sys
 from twitter_classes import TwitterCredentials, TweetData
 
 
-def main(user_filename="twitter_users_default", output_filename="twitter_data_default"):
+def main(user_filename="user_data/twitter_users_default", output_filename="tweet_data/twitter_data_default"):
     """
     Scrapes tweets from specified users.
     """
