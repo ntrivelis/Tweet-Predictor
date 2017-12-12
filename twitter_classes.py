@@ -37,12 +37,12 @@ class TweetData(object):
             self.tweet_count = len(self.tweets)
         else:
             self.tweets = defaultdict(dict)
-            self.output_filename = output_filename
-            self.current_year = time.time()/60.0/60.0/24.0/30.4375/12.0 + 1970
-            self.current_month = 12.0 * (self.current_year - math.floor(self.current_year)) + 1
-            self.current_day = 30.4375 * (self.current_month - math.floor(self.current_month)) + 1
-            self.current_time = math.floor(self.current_day + 30.4375*math.floor(self.current_month)
-                                           + 365.25*math.floor(self.current_year))  # in days
+        self.output_filename = output_filename
+        self.current_year = time.time()/60.0/60.0/24.0/30.4375/12.0 + 1970
+        self.current_month = 12.0 * (self.current_year - math.floor(self.current_year)) + 1
+        self.current_day = 30.4375 * (self.current_month - math.floor(self.current_month)) + 1
+        self.current_time = math.floor(self.current_day + 30.4375*math.floor(self.current_month)
+                                       + 365.25*math.floor(self.current_year))  # in days
 
     def add_tweet(self, tweet_data):
         """
@@ -138,4 +138,6 @@ class TweetData(object):
         pickle_in = open("%s.pickle" % pickle_filename, "rb")
 
         # Populate the dictionary
-        return pickle.load(pickle_in)
+        tweet_data = pickle.load(pickle_in)
+        pickle_in.close
+        return tweet_data

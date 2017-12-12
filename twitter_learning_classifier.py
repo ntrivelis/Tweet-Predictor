@@ -38,7 +38,7 @@ write_fname = 'top10_results.txt'
 
 class TweetLearning(object):
 
-    def __init__(self, input_filename):
+    def __init__(self, input_filename, output_filename):
         """
         Stores and interfaces with the tweet classifier for machine learning
         """
@@ -52,6 +52,7 @@ class TweetLearning(object):
         # Instantiate the learner.
         self.td = TweetData(pickle_filename=input_filename)
         self.num_tweets = self.td.tweet_count
+        self.output_filename = output_filename
         # features = []
         # favorites = []
         # time_ratio = []
@@ -252,7 +253,7 @@ def main(input_filename="tweet_data/twitter_data_default", output_filename="lear
     Trains a learning model for tweet data and attempts to make like and retweet predictions base on text content and
     number of followers (inversely scaled for age of tweet).
     """
-    TweetLearning(input_filename)
+    TweetLearning(input_filename, output_filename)
     return 0
 
 if __name__ == '__main__':
