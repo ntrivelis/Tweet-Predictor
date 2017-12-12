@@ -41,19 +41,37 @@ class TweetLearning(object):
         self.write_file.write('========================================\n')
         self.write_file.write('NEW TEST\n')
 
+        self.my_print(write_fname)
+
         # Instantiate the learner.
         self.td = TweetData(pickle_filename=input_filename)
+        self.num_tweets = self.td.tweet_count
+        # features = []
+        # favorites = []
+        # time_ratio = []
+        # followers = []
+        # for i in range(self.td.tweet_count):
+        #     features.append(self.td.tweets[i]['text'])
+        #     favorites.append(self.td.tweets[i]['favorites'])
+        #     time_ratio.append(self.td.tweets[i]['time_ratio'])
+        #     followers.append(self.td.tweets[i]['followers'])
+        #
+        # favorites = np.array(favorites).reshape(self.num_tweets, 1)
+        # time_ratio = np.array(time_ratio).reshape(self.num_tweets, 1)
+        # followers = np.array(followers).reshape(self.num_tweets, 1)
 
-        # Extract relevant features for learning.
-        features = self.td.tweets[:]['text']
+        features = self.td.return_feature('text')
+        favorites = self.td.return_feature('favorites')
+        time_ratio = self.td.return_feature('time_ratio')
+        followers = self.td.return_feature('followers')
 
-        # Make sure to convert to double before dividing:
-        targets = np.asarray(self.td.tweets[:]['retweets'])/np.asarray(self.td.tweets[:]['followers'])
+        # targets = favorites/(time_ratio*followers)
+        targets = favorites
 
-        cats = ['alt.atheism', 'sci.space']
-        twenty_train = fetch_20newsgroups(subset='train', categories=cats, shuffle=True, random_state=42)
-        features = twenty_train.data
-        targets = twenty_train.target
+        # cats = ['alt.atheism', 'sci.space']
+        # twenty_train = fetch_20newsgroups(subset='train', categories=cats, shuffle=True, random_state=42)
+        # features = twenty_train.data
+        # targets = twenty_train.target
         # features = np.arange(200).reshape((100, 2))
         # features: list of filenames or strings
         # features = ['dog cat mouse', 'mouse dog', 'doggo dog', 'mean man bye', 'milkshake thermos']
@@ -64,14 +82,14 @@ class TweetLearning(object):
         self.my_print("Testing on {} instances...".format(self.n))
 
         # Linear Regression
-        clf = LinearRegression()
-        params = [
-            {'vect__lowercase': [True]},
-            {'vect__stop_words': ['english']},
-            {'tfidf__sublinear_tf': [True]},
-            {'clf__fit_intercept': [True, False]}
-                  ]
-        self.get_result_text(features, targets, clf, params)
+        # clf = LinearRegression()
+        # params = [
+        #     {'vect__lowercase': [True]},
+        #     {'vect__stop_words': ['english']},
+        #     {'tfidf__sublinear_tf': [True]},
+        #     {'clf__fit_intercept': [True, False]}
+        #           ]
+        # self.get_result_text(features, targets, clf, params)
 
         # State Vector Regression
         clf = SVR()
