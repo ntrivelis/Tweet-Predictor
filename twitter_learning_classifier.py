@@ -24,13 +24,16 @@ from sklearn.ensemble import AdaBoostClassifier
 from sklearn.pipeline import FeatureUnion
 from twitter_classes import TweetData
 import sys
+from sklearn.metrics.pairwise import cosine_similarity
+from sklearn.decomposition import TruncatedSVD
+
 
 # http://scikit-learn.org/stable/auto_examples/hetero_feature_union.html
 # https://marcobonzanini.com/2015/03/02/mining-twitter-data-with-python-part-1/
 # https://pythontips.com/2013/08/02/what-is-pickle-in-python/
 
 verbose = True
-write_fname = 'debug.txt'
+write_fname = 'presidents.txt'
 
 class TweetLearning(object):
 
@@ -86,6 +89,44 @@ class TweetLearning(object):
         self.n = len(features)
         self.my_print("Testing on {} instances...".format(self.n))
 
+        # perform SVD
+
+        cv = CountVectorizer()
+
+        pipe = Pipeline([
+            ('vect', cv),
+            ('tfidf', TfidfTransformer())
+        ])
+        fs = pipe.fit_transform(features)
+
+        svd = TruncatedSVD(100)
+        fs_svd = svd.fit_transform(fs)
+        self.my_print("SVD: ")
+        self.my_print(svd)
+
+        # res = svd.transform(np.eye(2))
+
+        back = svd.inverse_transform(fs_svd)
+
+        # back_sum = np.sum(back,axis=0)
+        back_sum = np.sum(svd.components_,0)
+        top_words_ind = np.argpartition(back_sum, -20)[-20:]
+        top_words_ind_sorted = top_words_ind[np.argsort(back_sum[top_words_ind])]
+        top_words = []
+
+        featnames = cv.get_feature_names()
+
+        for wi in top_words_ind_sorted:
+            # top_words.append(cv.vocabulary_.keys()[wi])
+            top_words.append(featnames[wi])
+
+
+        self.my_print("Top Words: ")
+        self.my_print(top_words)
+
+
+        # contr_sums = np.sum()
+
         # Linear Regression
         # clf = LinearRegression()
         # params = [
@@ -102,17 +143,17 @@ class TweetLearning(object):
             {'vect__lowercase': [True]},
             {'vect__stop_words': ['english']},
             {'tfidf__sublinear_tf': [True]},
-            {'clf__C': [0.1]},
-            {'clf__kernel': ['rbf']}
+            {'clf__C': [1]},
+            {'clf__kernel': [cosine_similarity]}
                   ]
-        # params = [
-        #     {'vect__lowercase': [True]},
-        #     {'vect__stop_words': ['english']},
-        #     {'tfidf__sublinear_tf': [True]},
-        #     {'clf__C': [0.1, 0.5, 1.0]},
-        #     {'clf__epsilon': [0.1, 0.2, 0.5, 1.0]},
-        #     {'clf__kernel': ['rbf', 'linear', 'poly']}
-        #           ]
+        self.get_result_text(features, targets, clf, params)
+
+        clf = MultinomialNB()
+        params = [
+            {'vect__lowercase': [True]},
+            {'vect__stop_words': ['english']},
+            {'tfidf__sublinear_tf': [True]}
+        ]
         self.get_result_text(features, targets, clf, params)
 
         # Adaboost Regression
@@ -121,7 +162,7 @@ class TweetLearning(object):
             {'vect__lowercase': [True]},
             {'vect__stop_words': ['english']},
             {'tfidf__sublinear_tf': [True]},
-            {'clf__n_estimators': [50]},
+            {'clf__n_estimators': [25,50,100]},
                   ]
         # params = [
         #     {'vect__lowercase': [True]},
@@ -166,7 +207,9 @@ class TweetLearning(object):
         self.my_print("Making predictions...")
         self.my_print("Best estimator found by grid search: {}".format(estimator.best_estimator_))
         self.my_print("Best score: {}".format(estimator.best_score_))
+        self.my_print("Best parameters: {}".format(estimator.best_params_))
         self.my_print("Time: {}".format(time.time()-start))
+        self.my_print("========================================")
 
     def my_print(self, text):
         if verbose:

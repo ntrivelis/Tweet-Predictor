@@ -1,0 +1,58 @@
+========================================
+NEW TEST
+presidents.txt
+2492
+2580
+2874
+Testing on 7946 instances...
+SVD: 
+TruncatedSVD(algorithm='randomized', n_components=100, n_iter=5,
+       random_state=None, tol=0.0)
+Top Words: 
+[u'here', u'thank', u'together', u'your', u'can', u'not', u'so', u'americans', u'would', u'from', u'other', u'my', u'all', u'she', u'jobs', u'amp', u'make', u'on', u'you', u'country']
+Making pipeline for classifier SVC(C=1.0, cache_size=200, class_weight=None, coef0=0.0,
+  decision_function_shape='ovr', degree=3, gamma='auto', kernel='rbf',
+  max_iter=-1, probability=False, random_state=None, shrinking=True,
+  tol=0.001, verbose=False)
+Training pipeline...
+Making predictions...
+Best estimator found by grid search: Pipeline(memory=None,
+     steps=[('vect', CountVectorizer(analyzer=u'word', binary=False, decode_error=u'strict',
+        dtype=<type 'numpy.int64'>, encoding=u'utf-8', input=u'content',
+        lowercase=True, max_df=1.0, max_features=None, min_df=1,
+        ngram_range=(1, 1), preprocessor=None, stop_words=None,
+        st..., max_iter=-1,
+  probability=False, random_state=None, shrinking=True, tol=0.001,
+  verbose=False))])
+Best score: 0.85023911402
+Best parameters: {'clf__kernel': <function cosine_similarity at 0x105d5fb90>}
+Time: 156.825924158
+========================================
+Making pipeline for classifier MultinomialNB(alpha=1.0, class_prior=None, fit_prior=True)
+Training pipeline...
+Making predictions...
+Best estimator found by grid search: Pipeline(memory=None,
+     steps=[('vect', CountVectorizer(analyzer=u'word', binary=False, decode_error=u'strict',
+        dtype=<type 'numpy.int64'>, encoding=u'utf-8', input=u'content',
+        lowercase=True, max_df=1.0, max_features=None, min_df=1,
+        ngram_range=(1, 1), preprocessor=None, stop_words=None,
+        st...linear_tf=True, use_idf=True)), ('clf', MultinomialNB(alpha=1.0, class_prior=None, fit_prior=True))])
+Best score: 0.8496098666
+Best parameters: {'tfidf__sublinear_tf': True}
+Time: 3.3683578968
+========================================
+Making pipeline for classifier AdaBoostClassifier(algorithm='SAMME.R', base_estimator=None,
+          learning_rate=1.0, n_estimators=50, random_state=None)
+Training pipeline...
+Making predictions...
+Best estimator found by grid search: Pipeline(memory=None,
+     steps=[('vect', CountVectorizer(analyzer=u'word', binary=False, decode_error=u'strict',
+        dtype=<type 'numpy.int64'>, encoding=u'utf-8', input=u'content',
+        lowercase=True, max_df=1.0, max_features=None, min_df=1,
+        ngram_range=(1, 1), preprocessor=None, stop_words=None,
+        st...='SAMME.R', base_estimator=None,
+          learning_rate=1.0, n_estimators=100, random_state=None))])
+Best score: 0.744273848477
+Best parameters: {'clf__n_estimators': 100}
+Time: 23.7310948372
+========================================
