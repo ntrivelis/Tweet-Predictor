@@ -100,7 +100,7 @@ class TweetData(object):
             features = []
             for i in range(self.tweet_count):
                 unfiltered_tweet = self.tweets[i]['text']
-                filtered_tweet = unfiltered_tweet
+                filtered_tweet = unfiltered_tweet.encode('ascii', 'replace')
                 features.append(filtered_tweet)
             return features
         else:
