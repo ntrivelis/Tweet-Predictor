@@ -64,9 +64,9 @@ presidents2.txt
 2874
 Testing on 7946 instances...
 RF Top Words:
-[u'hillary', u'co', u'https', u'trump', u'great', u'we', u'to', u'amp', u'not', u'the', u'that', u'is', u'must', u'donald', u'for', u'potus', u'in', u'people', u'and', u'of', u'will', u'this', u'it', u'health', u'thank', u'you', u'bernie', u'news', u'president', u'need', u'our', u'have', u'very', u'draintheswamp', u'on', u'what', u're', u'if', u'with', u'vote', u'debatenight', u'who', u'street', u'be', u'americans', u'at', u'us', u'maga', u'he', u'america', u'democratic', u'ttgeqxnqym', u'are', u'can', u'should', u'was', u'every', u'she', u'an', u'about', u'today', u'as', u'country', u'one', u'his', u'women', u'let', u'make', u'me', u'than', u'when', u'climate', u'no', u'fake', u'change', u'has', u'out', u'healthcare', u'going', u'now', u'revolution', u'time', u'my', u'families', u'big', u'care', u'media', u'but', u'her', u'fight', u'by', u'their', u'clinton', u'up', u'social', u'election', u'campaign', u'day', u'all', u'again']
+hillary trump great we donald potus people health thank you bernie news president draintheswamp vote  debatenight who street americans us maga he america democratic she today country his women climate fake change healthcare revolution time families big care media her fight clinton social election campaign day all
 SVD: 
-TruncatedSVD(algorithm='randomized', n_components=100, n_iter=5,
+TruncatedSVD(algorithm=randomized, n_components=100, n_iter=5,
        random_state=None, tol=0.0)
 Top Words: 
 [u'who', u'do', u'security', u'take', u'make', u'street', u'from', u'this', u'wall', u'amp', u'up', u'country', u'american', u'just', u'at', u'so', u'should', u'on', u'all', u'you']

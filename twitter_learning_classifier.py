@@ -34,7 +34,7 @@ from sklearn.ensemble import RandomForestClassifier
 # https://pythontips.com/2013/08/02/what-is-pickle-in-python/
 
 verbose = True
-write_fname = 'presidents2.txt'
+write_fname = 'top10_results.txt'
 
 class TweetLearning(object):
 
@@ -234,6 +234,7 @@ class TweetLearning(object):
         estimator.fit(ff, tt.flatten())
 
         self.my_print("Making predictions...")
+        self.my_print("Best estimator found by grid search: {}".format(estimator.best_estimator_))
         self.my_print("Best estimator found by grid search: {}".format(estimator.best_estimator_))
         self.my_print("Best score: {}".format(estimator.best_score_))
         self.my_print("Best parameters: {}".format(estimator.best_params_))
