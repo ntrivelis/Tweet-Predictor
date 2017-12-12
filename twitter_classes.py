@@ -33,6 +33,7 @@ class TweetData(object):
         self.tweet_count = 0
         if pickle_filename != None:
             self.tweets = self.load_tweets(pickle_filename)
+            self.tweet_count = len(self.tweets)
         else:
             self.tweets = defaultdict(dict)
             self.output_filename = output_filename
@@ -90,6 +91,14 @@ class TweetData(object):
 
         # Calculate the ratio.
         return (tweet_time - user_time)/(self.current_time - user_time)
+
+    def filter_text(self):
+        """
+        Removes unnecessary characters, words, and links from the tweets. Helps with the bag-of-words implementation.
+        """
+        for i in range(self.tweet_count):
+            unfiltered_tweet = self.tweets[i]['text']
+            filtered_tweet = unfiltered_tweet
 
     def save_tweets(self):
         """
