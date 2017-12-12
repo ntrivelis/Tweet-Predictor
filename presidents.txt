@@ -56,3 +56,116 @@ Best score: 0.744273848477
 Best parameters: {'clf__n_estimators': 100}
 Time: 23.7310948372
 ========================================
+========================================
+NEW TEST
+presidents.txt
+2492
+2580
+2874
+Testing on 7946 instances...
+SVD: 
+TruncatedSVD(algorithm='randomized', n_components=100, n_iter=5,
+       random_state=None, tol=0.0)
+Top Words: 
+[u'united', u'states', u'this', u'big', u'can', u'street', u'he', u'wall', u'america', u'from', u'amp', u'your', u'just', u'country', u'jobs', u'hillary', u'all', u'their', u'on', u'you']
+Making pipeline for classifier SVC(C=1.0, cache_size=200, class_weight=None, coef0=0.0,
+  decision_function_shape='ovr', degree=3, gamma='auto', kernel='rbf',
+  max_iter=-1, probability=False, random_state=None, shrinking=True,
+  tol=0.001, verbose=False)
+Training pipeline...
+Making predictions...
+Best estimator found by grid search: Pipeline(memory=None,
+     steps=[('vect', CountVectorizer(analyzer=u'word', binary=False, decode_error=u'strict',
+        dtype=<type 'numpy.int64'>, encoding=u'utf-8', input=u'content',
+        lowercase=True, max_df=1.0, max_features=None, min_df=1,
+        ngram_range=(1, 1), preprocessor=None, stop_words=None,
+        st..., max_iter=-1,
+  probability=False, random_state=None, shrinking=True, tol=0.001,
+  verbose=False))])
+Best score: 0.854140448024
+Best parameters: {'clf__kernel': <function cosine_similarity at 0x105d5ab90>}
+CV Results: {'std_train_score': array([  3.21845411e-05,   3.21845411e-05,   3.21845411e-05,
+         3.21845411e-05,   9.36326951e-04]), 'rank_test_score': array([2, 2, 2, 2, 1], dtype=int32), 'split1_train_score': array([ 0.36171418,  0.36171418,  0.36171418,  0.36171418,  0.97470266]), 'param_vect__stop_words': masked_array(data = [-- 'english' -- -- --],
+             mask = [ True False  True  True  True],
+       fill_value = ?)
+, 'std_test_score': array([  6.43771841e-05,   6.43771841e-05,   6.43771841e-05,
+         6.43771841e-05,   1.70878277e-03]), 'param_clf__C': masked_array(data = [-- -- -- 1 --],
+             mask = [ True  True  True False  True],
+       fill_value = ?)
+, 'param_clf__kernel': masked_array(data = [-- -- -- -- <function cosine_similarity at 0x105d5ab90>],
+             mask = [ True  True  True  True False],
+       fill_value = ?)
+, 'split0_test_score': array([ 0.3616459 ,  0.3616459 ,  0.3616459 ,  0.3616459 ,  0.85277463]), 'mean_test_score': array([ 0.36169142,  0.36169142,  0.36169142,  0.36169142,  0.85414045]), 'split0_train_score': array([ 0.36171418,  0.36171418,  0.36171418,  0.36171418,  0.97659052]), 'split2_train_score': array([ 0.3616459 ,  0.3616459 ,  0.3616459 ,  0.3616459 ,  0.97451869]), 'std_score_time': array([ 0.00368779,  0.00369695,  0.13062413,  0.05078399,  0.03810144]), 'mean_train_score': array([ 0.36169142,  0.36169142,  0.36169142,  0.36169142,  0.97527062]), 'param_vect__lowercase': masked_array(data = [True -- -- -- --],
+             mask = [False  True  True  True  True],
+       fill_value = ?)
+, 'std_fit_time': array([ 0.21167456,  0.00565418,  0.26360366,  0.16915352,  0.1556587 ]), 'param_tfidf__sublinear_tf': masked_array(data = [-- -- True -- --],
+             mask = [ True  True False  True  True],
+       fill_value = ?)
+, 'split2_test_score': array([ 0.36178248,  0.36178248,  0.36178248,  0.36178248,  0.85309668]), 'params': [{'vect__lowercase': True}, {'vect__stop_words': 'english'}, {'tfidf__sublinear_tf': True}, {'clf__C': 1}, {'clf__kernel': <function cosine_similarity at 0x105d5ab90>}], 'mean_score_time': array([ 2.23487329,  1.25559799,  2.361811  ,  2.26434112,  0.49971128]), 'mean_fit_time': array([ 6.56102006,  3.84766769,  6.88430929,  6.51501695,  1.45974811]), 'split1_test_score': array([ 0.3616459 ,  0.3616459 ,  0.3616459 ,  0.3616459 ,  0.85654964])}
+Time: 157.35178113
+========================================
+Making pipeline for classifier MultinomialNB(alpha=1.0, class_prior=None, fit_prior=True)
+Training pipeline...
+Making predictions...
+Best estimator found by grid search: Pipeline(memory=None,
+     steps=[('vect', CountVectorizer(analyzer=u'word', binary=False, decode_error=u'strict',
+        dtype=<type 'numpy.int64'>, encoding=u'utf-8', input=u'content',
+        lowercase=True, max_df=1.0, max_features=None, min_df=1,
+        ngram_range=(1, 1), preprocessor=None, stop_words=None,
+        st...linear_tf=True, use_idf=True)), ('clf', MultinomialNB(alpha=1.0, class_prior=None, fit_prior=True))])
+Best score: 0.853007802668
+Best parameters: {'tfidf__sublinear_tf': True}
+CV Results: {'std_train_score': array([ 0.00160419,  0.00131338,  0.00180144]), 'rank_test_score': array([2, 3, 1], dtype=int32), 'param_vect__stop_words': masked_array(data = [-- 'english' --],
+             mask = [ True False  True],
+       fill_value = ?)
+, 'split1_train_score': array([ 0.94581839,  0.9511044 ,  0.94770625]), 'split2_train_score': array([ 0.94224236,  0.94979237,  0.94356361]), 'std_score_time': array([ 0.00181375,  0.0003732 ,  0.00586609]), 'param_vect__lowercase': masked_array(data = [True -- --],
+             mask = [False  True  True],
+       fill_value = ?)
+, 'split2_test_score': array([ 0.85234139,  0.85271903,  0.85347432]), 'mean_score_time': array([ 0.06338263,  0.05862975,  0.0690213 ]), 'mean_fit_time': array([ 0.14196769,  0.13594604,  0.15818866]), 'split0_train_score': array([ 0.94544082,  0.95299226,  0.9469511 ]), 'std_test_score': array([ 0.00020422,  0.00457672,  0.00032982]), 'mean_train_score': array([ 0.94450052,  0.95129634,  0.94607365]), 'split0_test_score': array([ 0.85277463,  0.84220461,  0.85277463]), 'mean_test_score': array([ 0.85263025,  0.84633778,  0.8530078 ]), 'params': [{'vect__lowercase': True}, {'vect__stop_words': 'english'}, {'tfidf__sublinear_tf': True}], 'std_fit_time': array([ 0.00296871,  0.00124442,  0.02447889]), 'param_tfidf__sublinear_tf': masked_array(data = [-- -- True],
+             mask = [ True  True False],
+       fill_value = ?)
+, 'split1_test_score': array([ 0.85277463,  0.84409211,  0.85277463])}
+Time: 3.31796002388
+========================================
+Making pipeline for classifier AdaBoostClassifier(algorithm='SAMME.R', base_estimator=None,
+          learning_rate=1.0, n_estimators=50, random_state=None)
+Training pipeline...
+Making predictions...
+Best estimator found by grid search: Pipeline(memory=None,
+     steps=[('vect', CountVectorizer(analyzer=u'word', binary=False, decode_error=u'strict',
+        dtype=<type 'numpy.int64'>, encoding=u'utf-8', input=u'content',
+        lowercase=True, max_df=1.0, max_features=None, min_df=1,
+        ngram_range=(1, 1), preprocessor=None, stop_words=None,
+        st...='SAMME.R', base_estimator=None,
+          learning_rate=1.0, n_estimators=100, random_state=None))])
+Best score: 0.746035741253
+Best parameters: {'clf__n_estimators': 100}
+CV Results: {'std_train_score': array([ 0.0015687 ,  0.00620884,  0.00484211,  0.00640851,  0.0015687 ,
+        0.00481034]), 'rank_test_score': array([3, 5, 2, 6, 3, 1], dtype=int32), 'mean_train_score': array([ 0.72722122,  0.70941397,  0.73131168,  0.67316836,  0.72722122,
+        0.78441978]), 'param_vect__stop_words': masked_array(data = [-- 'english' -- -- -- --],
+             mask = [ True False  True  True  True  True],
+       fill_value = ?)
+, 'std_test_score': array([ 0.00477034,  0.00494813,  0.00728978,  0.00445511,  0.00477034,
+        0.00810389]), 'mean_test_score': array([ 0.70714825,  0.68965517,  0.71218223,  0.66121319,  0.70714825,
+        0.74603574]), 'split1_train_score': array([ 0.72512743,  0.71757599,  0.73003587,  0.67188975,  0.72512743,
+        0.78988106]), 'split0_test_score': array([ 0.71158928,  0.69422424,  0.7210268 ,  0.66364666,  0.71158928,
+        0.73537184]), 'param_clf__n_estimators': masked_array(data = [-- -- -- 25 50 100],
+             mask = [ True  True  True False False False],
+       fill_value = ?)
+, 'split0_train_score': array([ 0.72890315,  0.70813668,  0.7377761 ,  0.66603738,  0.72890315,
+        0.77817633]), 'split2_train_score': array([ 0.72763307,  0.70252926,  0.72612307,  0.68157795,  0.72763307,
+        0.78520196]), 'std_score_time': array([ 0.00602517,  0.0008673 ,  0.0006004 ,  0.00100606,  0.00223535,
+        0.0011612 ]), 'param_vect__lowercase': masked_array(data = [True -- -- -- -- --],
+             mask = [False  True  True  True  True  True],
+       fill_value = ?)
+, 'std_fit_time': array([ 0.05706604,  0.00124273,  0.00407261,  0.01285046,  0.01665832,
+        0.01555754]), 'param_tfidf__sublinear_tf': masked_array(data = [-- -- True -- -- --],
+             mask = [ True  True False  True  True  True],
+       fill_value = ?)
+, 'split2_test_score': array([ 0.7005287 ,  0.68277946,  0.70317221,  0.66503021,  0.7005287 ,
+        0.74773414]), 'params': [{'vect__lowercase': True}, {'vect__stop_words': 'english'}, {'tfidf__sublinear_tf': True}, {'clf__n_estimators': 25}, {'clf__n_estimators': 50}, {'clf__n_estimators': 100}], 'mean_score_time': array([ 0.09141199,  0.07726002,  0.08460657,  0.07891496,  0.08641251,
+        0.10726929]), 'mean_fit_time': array([ 0.92359662,  0.57595309,  0.82592479,  0.50428208,  0.83211843,
+        1.51915701]), 'split1_test_score': array([ 0.70932427,  0.69195923,  0.71234428,  0.65496414,  0.70932427,
+        0.75500189])}
+Time: 22.6430211067
+========================================
