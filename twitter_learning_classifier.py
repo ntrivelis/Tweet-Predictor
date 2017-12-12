@@ -26,6 +26,7 @@ from twitter_classes import TweetData
 import sys
 from sklearn.metrics.pairwise import cosine_similarity
 from sklearn.decomposition import TruncatedSVD
+from sklearn.ensemble import RandomForestClassifier
 
 
 # http://scikit-learn.org/stable/auto_examples/hetero_feature_union.html
@@ -33,7 +34,7 @@ from sklearn.decomposition import TruncatedSVD
 # https://pythontips.com/2013/08/02/what-is-pickle-in-python/
 
 verbose = True
-write_fname = 'presidents.txt'
+write_fname = 'presidents2.txt'
 
 class TweetLearning(object):
 
@@ -99,6 +100,24 @@ class TweetLearning(object):
         ])
         fs = pipe.fit_transform(features)
 
+        ### Random Forest ###
+
+        clf = RandomForestClassifier()
+        clf.fit(fs, targets)
+
+        importances = clf.feature_importances_
+        indices = np.argsort(importances)[::-1]
+        rf_top_words = []
+
+        feature_names = cv.get_feature_names()
+
+        for i in xrange(100):
+            rf_top_words.append(feature_names[indices[i]])
+
+        self.my_print("RF Top Words:")
+        self.my_print(rf_top_words)
+
+        ### SVD ###
         svd = TruncatedSVD(100)
         fs_svd = svd.fit_transform(fs)
         self.my_print("SVD: ")
@@ -136,6 +155,16 @@ class TweetLearning(object):
         #     {'clf__fit_intercept': [True, False]}
         #           ]
         # self.get_result_text(features, targets, clf, params)
+
+        #
+        clf = RandomForestClassifier()
+        params = [
+            {'vect__lowercase': [True]},
+            {'vect__stop_words': ['english']},
+            {'tfidf__sublinear_tf': [True]},
+                  ]
+        self.get_result_text(features, targets, clf, params)
+
 
         # State Vector Regression
         clf = SVC()
@@ -208,6 +237,7 @@ class TweetLearning(object):
         self.my_print("Best estimator found by grid search: {}".format(estimator.best_estimator_))
         self.my_print("Best score: {}".format(estimator.best_score_))
         self.my_print("Best parameters: {}".format(estimator.best_params_))
+        self.my_print("CV Results: {}".format(estimator.cv_results_))
         self.my_print("Time: {}".format(time.time()-start))
         self.my_print("========================================")
 
