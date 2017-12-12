@@ -49,5 +49,3 @@ Temporary Items
 # Ignore these files:
 .idea
 *.pyc
-twitter_data_default.pickle
-twitter_users_default.txt
